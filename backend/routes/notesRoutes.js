@@ -2,22 +2,22 @@
 
 import express from 'express'
 
-const notesRouter = express.Router
+const notesRouter = express.Router()
 
-app.get('/api/v1/notes', (req, res) => {
-  res.send('Our first demo note in the first route')
+notesRouter.get('/', (req, res) => {
+  res.status(200).send('Our first demo note in the first route')
 })
 
-app.post('/api/v1/notes', (req, res) => {
-  res.send('New Note Created')
+notesRouter.post('/', (req, res) => {
+  res.status(201).send('New Note Created')
 })
 
-app.patch('/api/v1/notes/:id', (req, res) => {
-  res.send(' Note edited Created')
+notesRouter.patch('/:id', (req, res) => {
+  res.status(203).send(' Note edited Created')
 })
 
-app.delete('/api/v1/notes/:id', (req, res) => {
-  res.send('Note Deleted')
+notesRouter.delete('/:id', (req, res) => {
+  res.status(200).send('Note Deleted')
 })
 
 export default notesRouter
