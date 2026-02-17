@@ -9,7 +9,7 @@ const app = express()
 // Connect to DB
 connectDB()
 
-let PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3000
 
 app.use('/api/v1/notes', notesRouter)
 
