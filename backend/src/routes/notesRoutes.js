@@ -14,6 +14,7 @@ const notesRouter = express.Router()
 notesRouter.get('/', getAllNotes)
 
 notesRouter.get('/:id', getNoteById)
+
 notesRouter.post('/', createNote)
 
 notesRouter.patch('/:id', editNote)

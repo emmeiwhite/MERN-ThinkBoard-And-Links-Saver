@@ -2,7 +2,7 @@ import Note from '../models/Note.js'
 
 export const getAllNotes = async (req, res) => {
   try {
-    const notes = await Note.find()
+    const notes = await Note.find().sort({ createdAt: -1 }) // newest first
     res.status(200).send(notes)
   } catch (error) {
     console.log(`Error getting all notes`, error)
