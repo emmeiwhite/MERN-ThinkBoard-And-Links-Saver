@@ -1,13 +1,51 @@
+import Note from '../models/Note.js'
+
 export const getAllNotes = async (req, res) => {
-  res.status(200).send('Our first demo note in the first route')
+  try {
+    const notes = await Note.find()
+    res.status(200).send(notes)
+  } catch (error) {
+    console.log(`Error getting all notes`, error)
+    res.status(500).send({ message: 'Internal Server Error!' })
+  }
 }
 
 export const createNote = async (req, res) => {
-  res.status(201).send('New Note Created')
+  try {
+    const { title, content } = req.body
+
+    const note = new Note({ title, content })
+
+    const newNote = await note.save()
+
+    res.status(201).send(newNote)
+  } catch (error) {
+    console.log(`Error creating Note`, error)
+    res.status(500).send({ message: 'Internal Server Error!' })
+  }
 }
 
 export const editNote = async (req, res) => {
-  res.status(203).send(' Note edited Created')
+  try {
+    const { id } = req.params
+    const { content, title } = req.body
+    const updateFields = {}
+
+    if (title !== undefined) updateFields.title = title
+    if (content !== undefined) updateFields.content = content
+
+    const updatedNote = await Note.findByIdAndUpdate(id, updateFields, {
+      new: true,
+      runValidators: true
+    })
+    // If id doesn't match
+    if (!updatedNote) return res.status(404).json({ message: 'Note not found' })
+
+    res.status(200).send(updatedNote)
+  } catch (error) {
+    console.log(`Error editing Note`, error)
+    res.status(500).send({ message: 'Internal Server Error!' })
+  }
 }
 
 export const deleteNote = async (req, res) => {
