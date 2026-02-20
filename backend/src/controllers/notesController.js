@@ -49,5 +49,18 @@ export const editNote = async (req, res) => {
 }
 
 export const deleteNote = async (req, res) => {
-  res.status(200).send('Note Deleted')
+  try {
+    const { id } = req.params
+
+    const deletedNote = await Note.findByIdAndDelete(id)
+
+    if (!deletedNote) {
+      return res.status(404).json({ message: 'Note not found' })
+    }
+
+    res.status(200).json({ message: 'Note deleted successfully' })
+  } catch (error) {
+    console.log('Error deleting note', error)
+    res.status(500).json({ message: 'Internal Server Error!' })
+  }
 }
