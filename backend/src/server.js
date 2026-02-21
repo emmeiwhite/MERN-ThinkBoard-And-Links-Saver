@@ -13,6 +13,12 @@ app.use(express.json()) // middleware to parse json data
 
 const PORT = process.env.PORT || 3000
 
+// Introducing middleware
+app.use((req, res, next) => {
+  console.log('Middleware invoked!')
+  next()
+})
+
 app.use('/api/v1/notes', notesRouter)
 
 app.listen(PORT, (req, res) => {

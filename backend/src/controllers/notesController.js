@@ -1,6 +1,7 @@
 import Note from '../models/Note.js'
 
 export const getAllNotes = async (req, res) => {
+  console.log('Controller Invoked')
   try {
     const notes = await Note.find().sort({ createdAt: -1 }) // newest first
     res.status(200).send(notes)
