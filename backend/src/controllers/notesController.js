@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import Note from '../models/Note.js'
 
 export const getAllNotes = async (req, res) => {
@@ -52,6 +53,11 @@ export const editNote = async (req, res) => {
 export const deleteNote = async (req, res) => {
   try {
     const { id } = req.params
+
+    // check valid ObjectId: CastError Handling
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid Note Id' })
+    }
 
     const deletedNote = await Note.findByIdAndDelete(id)
 

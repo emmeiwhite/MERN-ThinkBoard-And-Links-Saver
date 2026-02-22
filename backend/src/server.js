@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000
 
 // Introducing middleware
 app.use((req, res, next) => {
-  console.log('Middleware invoked!')
+  console.log(`Request method is ${req.method} & request url is ${req.url}`)
   next()
 })
 
