@@ -8,17 +8,18 @@ import {
   getAllNotes,
   getNoteById
 } from '../controllers/notesController.js'
+import { validateObjectId } from '../middleware/validateObjectId.js'
 
 const notesRouter = express.Router()
 
 notesRouter.get('/', getAllNotes)
 
-notesRouter.get('/:id', getNoteById)
+notesRouter.get('/:id', validateObjectId, getNoteById)
 
 notesRouter.post('/', createNote)
 
-notesRouter.patch('/:id', editNote)
+notesRouter.patch('/:id', validateObjectId, editNote)
 
-notesRouter.delete('/:id', deleteNote)
+notesRouter.delete('/:id', validateObjectId, deleteNote)
 
 export default notesRouter

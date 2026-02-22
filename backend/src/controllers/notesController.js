@@ -54,11 +54,6 @@ export const deleteNote = async (req, res) => {
   try {
     const { id } = req.params
 
-    // check valid ObjectId: CastError Handling
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: 'Invalid Note Id' })
-    }
-
     const deletedNote = await Note.findByIdAndDelete(id)
 
     if (!deletedNote) {
@@ -76,10 +71,6 @@ export const getNoteById = async (req, res) => {
   try {
     const { id } = req.params
 
-    // Check if id is valid
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return res.status(400).json({ message: 'Invalid ID format' })
-    }
     const note = await Note.findById(id)
     if (!note) return res.status(404).json({ message: 'Note not found!' })
     res.status(200).json(note)
