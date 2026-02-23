@@ -8,9 +8,6 @@ dotenv.config()
 
 const app = express()
 
-// Connect to DB
-connectDB()
-
 app.use(express.json()) // middleware to parse json data
 
 const PORT = process.env.PORT || 3000
@@ -18,6 +15,9 @@ const PORT = process.env.PORT || 3000
 app.use(rateLimiter) // order matters, First ratelimit will check how many requests are made by the user and accordinly allow or restrict requests from the user.
 app.use('/api/v1/notes', notesRouter)
 
-app.listen(PORT, (req, res) => {
-  console.log(`listening on port ${PORT}`)
+// Connect to DB
+connectDB().then(() => {
+  app.listen(PORT, (req, res) => {
+    console.log(`listening on port ${PORT}`)
+  })
 })
