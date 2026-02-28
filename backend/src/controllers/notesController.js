@@ -5,6 +5,7 @@ export const getAllNotes = async (req, res) => {
   console.log('Controller Invoked')
   try {
     const notes = await Note.find().sort({ createdAt: -1 }) // newest first
+    console.log('Notes send back')
     res.status(200).send(notes)
   } catch (error) {
     console.log(`Error getting all notes`, error)

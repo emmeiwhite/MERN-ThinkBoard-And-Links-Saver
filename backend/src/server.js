@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import notesRouter from './routes/notesRoutes.js'
 import connectDB from './config/db.js'
 import dotenv from 'dotenv'
@@ -7,6 +8,13 @@ import rateLimiter from './middleware/rateLimiter.js'
 dotenv.config()
 
 const app = express()
+
+// Allow multiple origins (dev + prod)
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'https://yourapp.com']
+  })
+)
 
 app.use(express.json()) // middleware to parse json data
 
