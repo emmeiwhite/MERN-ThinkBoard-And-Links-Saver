@@ -5,7 +5,7 @@ import axios from 'axios'
 import toast from 'react-hot-toast'
 
 export default function HomePage() {
-  const [isRateLimitReached, setIsRateLimitReached] = useState(false)
+  const [rateLimited, setRateLimited] = useState(false)
 
   // Let's integrate our API for the home page. Principle is UI=Fxn(state) changing over time, so we need to create the notes state
   const [notes, setNotes] = useState([])
@@ -13,13 +13,13 @@ export default function HomePage() {
 
   async function fetchNotes() {
     try {
-      const response = await axios.get('http://localhost:3000/api/v1/notes')
+      const response = await axios.get('http://localhost:3000/api/v1/note')
 
       setNotes(response.data)
-      setIsRateLimitReached(false)
+      setRateLimited(false)
     } catch (error) {
       if (error.response.status === 429) {
-        setIsRateLimitReached(true)
+        setRateLimited(true)
       } else {
         toast.error('Failed to load notes')
       }
@@ -37,7 +37,7 @@ export default function HomePage() {
     <div className="min-h-screen">
       <Navbar />
       {loading && <p>loading ...</p>}
-      {isRateLimitReached && <RateLimitedUI />}
+      {rateLimited && <RateLimitedUI />}
 
       {notes.length === 0 && loading === false && <p>Create a note</p>}
 
