@@ -4,6 +4,9 @@ import { Link } from 'react-router'
 
 export default function CreateNote() {
   const [loading, setLoading] = useState(false)
+  const [noteTitle, setNoteTitle] = useState('')
+  const [noteContent, setNoteContent] = useState('')
+
   function handleSubmit() {}
   return (
     <div className="min-h-screen bg-base-200">
@@ -33,6 +36,8 @@ export default function CreateNote() {
                   placeholder="Note Title"
                   className="input input-bordered w-full"
                   id="note-title"
+                  value={noteTitle}
+                  onChange={e => setNoteTitle(e.target.value)}
                 />
               </div>
 
@@ -48,6 +53,8 @@ export default function CreateNote() {
                   placeholder="Write your note here ..."
                   className="textarea textarea-bordered h-32 w-full"
                   id="note-desc"
+                  value={noteContent}
+                  onChange={e => setNoteContent(e.target.value)}
                 />
 
                 <div className="flex justify-end mt-4">
