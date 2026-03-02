@@ -14,10 +14,10 @@ export default function CreateNote() {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    if (!noteTitle.trim() || !noteContent.trim()) {
-      toast.error('All fields are required!')
-      return
-    }
+    // if (!noteTitle.trim() || !noteContent.trim()) {
+    //   toast.error('All fields are required!')
+    //   return
+    // }
 
     setLoading(true) // as soon as we set setLoading to true, button gets disabled and user cannot make another request until setLoading is false
 
@@ -32,8 +32,15 @@ export default function CreateNote() {
       toast.success('Note created successfully!')
       navigate('/')
     } catch (error) {
-      console.log('Error creating Note', error)
-      toast.error('Failed to create Note')
+      if (error.response.status === 429) {
+        toast.error('Slow down! you are creating notes too fast!', {
+          duration: 4000,
+          icon: '💀'
+        })
+      } else {
+        console.log('Error creating Note', error)
+        toast.error('Failed to create Note')
+      }
     } finally {
       setLoading(false)
     }
