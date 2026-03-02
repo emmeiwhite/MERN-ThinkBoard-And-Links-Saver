@@ -14,10 +14,10 @@ export default function CreateNote() {
   async function handleSubmit(e) {
     e.preventDefault()
 
-    // if (!noteTitle.trim() || !noteContent.trim()) {
-    //   toast.error('All fields are required!')
-    //   return
-    // }
+    if (!noteTitle.trim() || !noteContent.trim()) {
+      toast.error('All fields are required!')
+      return
+    }
 
     setLoading(true) // as soon as we set setLoading to true, button gets disabled and user cannot make another request until setLoading is false
 
