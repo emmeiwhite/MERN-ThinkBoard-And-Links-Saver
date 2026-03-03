@@ -1,11 +1,29 @@
 import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 import { Link } from 'react-router'
 import { formatDate } from '../lib/utils'
+import api from '../lib/axios'
+import toast from 'react-hot-toast'
 
 export default function NoteCard({ note }) {
-  function handleDelete(e, id) {
+  async function handleDelete(e, id) {
     e.preventDefault()
-    console.log('Deleting the Card!', id)
+    console.log('In the process of Deleting the Card! with ID:', id)
+
+    //   Make another API call to the BE and ask BE to delete the particular note with this id
+
+    try {
+      await api.delete(`/notes/${id}`)
+
+      console.log('Note Deleted Successfully!')
+    } catch (error) {
+      // Also if a user makes too many requests 429 Error Limit
+
+      if (error.response.status === 429) {
+        toast.error('Too many requests, please try again later!')
+      } else {
+        console.log(`Error deleting note`, error)
+      }
+    }
   }
   return (
     <Link
