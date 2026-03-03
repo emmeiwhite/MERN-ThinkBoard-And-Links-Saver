@@ -1,8 +1,12 @@
 import { PenSquareIcon, Trash2Icon } from 'lucide-react'
 import { Link } from 'react-router'
-import { formatDate } from '../pages/utils'
+import { formatDate } from '../lib/utils'
 
 export default function NoteCard({ note }) {
+  function handleDelete(e, id) {
+    e.preventDefault()
+    console.log('Deleting the Card!', id)
+  }
   return (
     <Link
       to={`/note/${note._id}`}
@@ -18,7 +22,9 @@ export default function NoteCard({ note }) {
 
           <div className="flex items-center gap-1">
             <PenSquareIcon className="size-4" />
-            <button className="btn btn-ghost btn-xs text-error">
+            <button
+              className="btn btn-ghost btn-xs text-error"
+              onClick={e => handleDelete(e, note._id)}>
               <Trash2Icon className="size-4" />
             </button>
           </div>

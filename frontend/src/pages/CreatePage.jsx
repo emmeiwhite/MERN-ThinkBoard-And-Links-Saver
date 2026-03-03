@@ -2,7 +2,7 @@ import { ArrowLeftIcon } from 'lucide-react'
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import toast from 'react-hot-toast'
-import axios from 'axios'
+import api from '../lib/axios'
 
 export default function CreateNote() {
   const [loading, setLoading] = useState(false)
@@ -24,7 +24,7 @@ export default function CreateNote() {
     // Now, we can make an API call to the Backend to create resource
 
     try {
-      await axios.post('http://localhost:3000/api/v1/notes', {
+      await api.post(`/notes`, {
         title: noteTitle,
         content: noteContent
       })
