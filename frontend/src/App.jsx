@@ -1,8 +1,7 @@
 import { Route, Routes } from 'react-router'
 import HomePage from './pages/HomePage'
-import EditNote from './pages/NoteDetailPage'
+import NoteDetailPage from './pages/NoteDetailPage'
 import CreateNote from './pages/CreatePage'
-// import toast from 'react-hot-toast'
 
 export default function App() {
   return (
@@ -14,7 +13,7 @@ export default function App() {
         />
         <Route
           path="/note/:id"
-          element={<EditNote />}
+          element={<NoteDetailPage />}
         />
         <Route
           path="/create"

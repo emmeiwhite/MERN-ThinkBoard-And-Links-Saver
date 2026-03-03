@@ -22,7 +22,7 @@ export default function HomePage() {
       setNotes(response.data)
       setRateLimited(false)
     } catch (error) {
-      if (error.response.status === 429) {
+      if (error.response?.status === 429) {
         setRateLimited(true)
       } else {
         toast.error('Failed to load notes')
@@ -34,7 +34,7 @@ export default function HomePage() {
 
   // In MVP, we'll use useEffect() but ultimately we'll go with Tanstack Query
   useEffect(() => {
-    // fetchNotes()
+    fetchNotes()
   }, [])
 
   return (
@@ -46,9 +46,8 @@ export default function HomePage() {
       <div className="max-w-7xl mx-auto p-4 mt-6">
         {loading && (
           <div
-            className="text-primary"
-            text-center
-            py-10>
+            className="text-primary text-center
+            py-10">
             Loading notes ...
           </div>
         )}
