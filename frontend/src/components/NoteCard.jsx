@@ -9,7 +9,9 @@ import { useState } from 'react'
 export default function NoteCard({ note, setNotes }) {
   const [isDeleting, setIsDeleting] = useState(false)
   async function handleDelete(e, id) {
-    e.preventDefault()
+    e.preventDefault() // get rid of navigation behaviour
+
+    if (!window.confirm('Are you sure you want to delete this note?')) return
 
     //   Make another API call to the BE and ask BE to delete the particular note with this id
     setIsDeleting(true)
