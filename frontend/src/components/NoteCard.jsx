@@ -4,7 +4,7 @@ import { formatDate } from '../lib/utils'
 import api from '../lib/axios'
 import toast from 'react-hot-toast'
 
-export default function NoteCard({ note }) {
+export default function NoteCard({ note, setNotes }) {
   async function handleDelete(e, id) {
     e.preventDefault()
     console.log('In the process of Deleting the Card! with ID:', id)
@@ -15,6 +15,11 @@ export default function NoteCard({ note }) {
       await api.delete(`/notes/${id}`)
 
       console.log('Note Deleted Successfully!')
+
+      // NOW, FE sync with BE is a must and UI = F(state), so we need to update the FE state as per the BE server data
+      setNotes(prev => {
+        return prev.filter(note => note._id !== id)
+      })
     } catch (error) {
       // Also if a user makes too many requests 429 Error Limit
 
