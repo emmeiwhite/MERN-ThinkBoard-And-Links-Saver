@@ -4,13 +4,15 @@ import { formatDate } from '../lib/utils'
 import api from '../lib/axios'
 import toast from 'react-hot-toast'
 
+import { useState } from 'react'
+
 export default function NoteCard({ note, setNotes }) {
+  const [isDeleting, setIsDeleting] = useState(false)
   async function handleDelete(e, id) {
     e.preventDefault()
-    console.log('In the process of Deleting the Card! with ID:', id)
 
     //   Make another API call to the BE and ask BE to delete the particular note with this id
-
+    setIsDeleting(true)
     try {
       await api.delete(`/notes/${id}`)
 
@@ -28,6 +30,8 @@ export default function NoteCard({ note, setNotes }) {
       } else {
         console.log(`Error deleting note`, error)
       }
+    } finally {
+      setIsDeleting(false)
     }
   }
   return (
@@ -48,7 +52,7 @@ export default function NoteCard({ note, setNotes }) {
             <button
               className="btn btn-ghost btn-xs text-error"
               onClick={e => handleDelete(e, note._id)}>
-              <Trash2Icon className="size-4" />
+              {isDeleting ? 'Deleting ...' : <Trash2Icon className="size-4" />}
             </button>
           </div>
         </div>
