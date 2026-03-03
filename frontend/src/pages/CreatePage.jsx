@@ -71,7 +71,7 @@ export default function CreateNote() {
                   <input
                     type="text"
                     placeholder="Note Title"
-                    className="input input-bordered w-full"
+                    className="input input-bordered w-full p-2"
                     id="note-title"
                     value={noteTitle}
                     onChange={e => setNoteTitle(e.target.value)}
@@ -88,20 +88,20 @@ export default function CreateNote() {
                   <textarea
                     type="text"
                     placeholder="Write your note here ..."
-                    className="textarea textarea-bordered h-32 w-full"
+                    className="textarea textarea-bordered h-32 w-full p-4"
                     id="note-desc"
                     value={noteContent}
                     onChange={e => setNoteContent(e.target.value)}
                   />
+                </div>
 
-                  <div className="flex justify-end mt-4">
-                    <button
-                      type="submit"
-                      className="btn btn-primary"
-                      disabled={loading}>
-                      {loading ? 'Creating ...' : 'Create Note'}
-                    </button>
-                  </div>
+                <div className="flex justify-end mt-4">
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={loading}>
+                    {loading ? 'Creating ...' : 'Create Note'}
+                  </button>
                 </div>
               </form>
             </div>

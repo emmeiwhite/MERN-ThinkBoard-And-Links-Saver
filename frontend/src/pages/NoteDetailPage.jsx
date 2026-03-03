@@ -11,9 +11,13 @@ export default function NoteDetailPage() {
 
   const [note, setNote] = useState(null) // we'll fetch complete note from the API
   const [loading, setLoading] = useState(true)
-  const [editAndSave, setEditAndSave] = useState(false)
+  const [saving, setSaving] = useState(false)
 
   // Now, we'll make our 4th and final API call for this Project MVP
+
+  function handleSave() {}
+
+  function handleDelete() {}
 
   async function updateNote() {
     try {
@@ -44,17 +48,68 @@ export default function NoteDetailPage() {
   return (
     <div className="min-h-screen bg-base-200">
       <div className="container mx-auto px-4 py-8">
-        {/* Top section */}
-        <div className="flex justify-between align-center mb-6">
-          <Link
-            to={`/`}
-            className="btn btn-ghost">
-            <ArrowLeftIcon className="size-5" /> Back to Notes
-          </Link>
+        <div className="max-w-2xl mx-auto">
+          {/* Top section */}
+          <div className="flex justify-between align-center mb-6">
+            <Link
+              to={`/`}
+              className="btn btn-ghost">
+              <ArrowLeftIcon className="size-5" /> Back to Notes
+            </Link>
 
-          <button className="btn btn-error btn-outline">
-            <Trash2Icon className="size-5" /> Delete Note
-          </button>
+            <button
+              className="btn btn-error btn-outline"
+              onClick={handleDelete}>
+              <Trash2Icon className="size-5" /> Delete Note
+            </button>
+          </div>
+
+          {/* Card */}
+          <div className="card bg-base-100">
+            <div className="card-body">
+              <div className="form-control mb-4">
+                <label
+                  className="block mb-2 p-2"
+                  htmlFor="note-desc">
+                  <span className="font-bold pl-2">Title</span>
+                </label>
+
+                <input
+                  type="text"
+                  placeholder="Note title"
+                  className="input input-bordered w-full"
+                  value={note.title}
+                  onChange={e => setNote({ ...note, title: e.target.value })}
+                />
+              </div>
+
+              <div className="form-control mb-6">
+                <label
+                  className="block mb-2"
+                  htmlFor="note-desc">
+                  <span className="font-bold pl-2">Content</span>
+                </label>
+
+                <textarea
+                  type="text"
+                  placeholder="Write your note here ..."
+                  className="textarea textarea-bordered h-32 w-full p-4"
+                  id="note-desc"
+                  value={note.content}
+                  onChange={e => setNote({ ...note, content: e.target.value })}
+                />
+              </div>
+              <div className="flex justify-end mt-4">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={saving}
+                  onClick={handleSave}>
+                  {saving ? 'Saving ...' : 'Save Changes'}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Form Section */}
