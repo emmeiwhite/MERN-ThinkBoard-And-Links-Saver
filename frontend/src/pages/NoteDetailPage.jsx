@@ -17,7 +17,18 @@ export default function NoteDetailPage() {
 
   function handleSave() {}
 
-  function handleDelete() {}
+  async function handleDelete() {
+    if (!window.confirm('Are you sure you want to delete this note?')) return
+
+    try {
+      await api.delete(`/notes/${note._id}`)
+      toast.success('Note deleted successfully!')
+      navigate(`/`)
+    } catch (error) {
+      console.log(`Error deleting note`, error)
+      toast.error('Error while deleting Note')
+    }
+  }
 
   async function updateNote() {
     try {
