@@ -21,6 +21,7 @@ export default function NoteDetailPage() {
       return
     }
 
+    setSaving(true)
     try {
       await api.patch(`/notes/${note._id}`, {
         title: note.title,
@@ -30,6 +31,8 @@ export default function NoteDetailPage() {
     } catch (error) {
       console.log(`Error updating and saving note`, error)
       toast.error('Error updating and saving the note')
+    } finally {
+      setSaving(false)
     }
   }
 
