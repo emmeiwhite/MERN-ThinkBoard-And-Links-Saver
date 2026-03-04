@@ -15,7 +15,23 @@ export default function NoteDetailPage() {
 
   // Now, we'll make our 4th and final API call for this Project MVP
 
-  function handleSave() {}
+  async function handleSave() {
+    if (!note.title.trim() || !note.content.trim()) {
+      toast.error('Please add a title or a content')
+      return
+    }
+
+    try {
+      await api.patch(`/notes/${note._id}`, {
+        title: note.title,
+        content: note.content
+      })
+      toast.success('Note has been successfully updated and saved')
+    } catch (error) {
+      console.log(`Error updating and saving note`, error)
+      toast.error('Error updating and saving the note')
+    }
+  }
 
   async function handleDelete() {
     if (!window.confirm('Are you sure you want to delete this note?')) return
