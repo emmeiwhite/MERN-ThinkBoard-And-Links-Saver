@@ -12,12 +12,15 @@ const __dirname = path.resolve()
 console.log(__dirname)
 const app = express()
 
+/** This cors configuration is also used only in development in our case since we are deploying on the same domain on render */
 // Allow multiple origins (dev + prod)
-app.use(
-  cors({
-    origin: ['http://localhost:5173', 'https://yourapp.com']
-  })
-)
+if (process.env.NODE_ENV !== 'production') {
+  app.use(
+    cors({
+      origin: ['http://localhost:5173', 'https://yourapp.com']
+    })
+  )
+}
 
 app.use(express.json()) // middleware to parse json data
 
@@ -26,14 +29,17 @@ const PORT = process.env.PORT || 3000
 app.use(rateLimiter) // order matters, First ratelimit will check how many requests are made by the user and accordinly allow or restrict requests from the user.
 app.use('/api/v1/notes', notesRouter)
 
-// Serving static assets --- In our case, optimised React App within dist folder
+/** The below setups are to be done, only when we are in production environment  (render in our case) */
 
-app.use(express.static(path.join(__dirname, '../frontend/dist')))
+if (process.env.NODE_ENV === 'production') {
+  // Serving static assets --- In our case, optimised React App within dist folder
+  app.use(express.static(path.join(__dirname, '../frontend/dist')))
 
-// For routes other than /api/v1/note, we will serve our Optimised FE
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
-})
+  // For routes other than /api/v1/note, we will serve our Optimised FE
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/dist/index.html'))
+  })
+}
 
 // Connect to DB
 connectDB().then(() => {
