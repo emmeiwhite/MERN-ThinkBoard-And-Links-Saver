@@ -4,7 +4,8 @@ A simple full-stack notes and links management application built with the MERN s
 
 ## 🚀 Live Demo
 
-Deployed on Render.
+Deployed on Render
+[View Live App](https://mern-thinkboard-and-links-saver.onrender.com/)
 
 ## 🛠 Tech Stack
 
