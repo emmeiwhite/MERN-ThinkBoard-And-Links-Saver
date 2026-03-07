@@ -161,3 +161,215 @@ So far:
 - Hosted on Render
 
 This is my perfect MVP.
+
+# Phase-2 Vision (Version-1 Product)
+
+Now we **evolve the app like real production software**.
+
+Two parallel tracks:
+
+---
+
+# 1️⃣ Backend Evolution
+
+### Introduce **User Entity**
+
+Meaning:
+
+Notes will now belong to a user.
+
+```
+User
+ ├── id
+ ├── name
+ ├── email
+ ├── passwordHash
+ └── createdAt
+
+Note
+ ├── id
+ ├── title
+ ├── content
+ ├── userId
+ └── timestamps
+```
+
+---
+
+### Authentication System
+
+I am revisiting and brushup both:
+
+1️⃣ **Session-based authentication**
+
+- cookies
+- express-session
+- server keeps session store
+
+2️⃣ **JWT authentication**
+
+- stateless
+- token stored client side
+- Authorization header
+
+This is **excellent for interviews**, because companies may use either.
+
+But I am planning to design it in a way that **frontend integration becomes the main focus**, as you mentioned.
+
+---
+
+# 2️⃣ Frontend Evolution (React Architecture)
+
+Our plan here is **very strong**.
+
+We will upgrade frontend step-by-step.
+
+### Replace basic patterns
+
+❌ Current
+
+```
+useEffect + fetch
+```
+
+✅ Future
+
+```
+TanStack Query
+```
+
+Benefits:
+
+- caching
+- automatic refetch
+- loading states
+- error handling
+- pagination support
+
+---
+
+### Improve state architecture
+
+From:
+
+```
+useState
+```
+
+To exploring:
+
+- Context + useReducer
+- Redux Toolkit
+- Zustand
+
+**state management evolution**.
+
+---
+
+### Performance & UX
+
+Add real production patterns:
+
+- Pagination
+- Infinite scroll
+- Search
+- Lazy loading
+- Code splitting
+- React performance patterns
+- Custom hooks
+- Service/API layer
+
+---
+
+# Final Target
+
+A **portfolio-ready fullstack product**:
+
+ThinkBoard V1
+
+Features:
+
+- User authentication
+- Protected routes
+- User notes
+- Search
+- Pagination
+- Optimized API fetching
+- Scalable React architecture
+- Clean backend structure
+- Hosted production build
+
+---
+
+### Importance of prior note taking
+
+This is **exactly how senior engineers learn**.
+
+Flow:
+
+```
+Our notes
+   ↓
+Our questions
+   ↓
+discussion with LLM
+   ↓
+implementation
+```
+
+Not passive learning.
+
+---
+
+# Authentication (Correct Order)
+
+Before writing auth code we must **design properly**.
+
+Step-1 will be:
+
+### Introduce User Model
+
+Then:
+
+Step-2
+
+### Auth API Contracts
+
+Example:
+
+```
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+POST /api/v1/auth/logout
+GET  /api/v1/auth/me
+```
+
+Then:
+
+Step-3
+
+Password hashing
+
+```
+bcrypt
+```
+
+Then:
+
+Step-4
+
+JWT or Session
+
+Then:
+
+Step-5
+
+Protect routes
+
+```
+GET /notes  -> only logged user notes
+```
+
+---
+
+> Designing the **User Schema + Note ownership relation**.
