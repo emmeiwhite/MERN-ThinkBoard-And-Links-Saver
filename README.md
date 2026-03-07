@@ -9,15 +9,24 @@ Deployed on Render
 
 ## 🛠 Tech Stack
 
-Frontend
+#### Frontend
 
 - React
 - Vite
 
-Backend
+API Contracts:
+
+- GET /api/v1/notes
+- GET /api/v1/notes/:id
+- POST /api/v1/notes
+- PATCH /api/v1/notes/:id
+- DELETE /api/v1/notes/:id
+
+#### Backend
 
 - Node.js
 - Express
+- Mongoose
 
 Database
 
@@ -102,3 +111,53 @@ The application is deployed using Render.
 ## 📌 Status
 
 First production deployment completed 🎉
+
+# PHASE-2 (From MVP to Production Grade Thinking)
+
+Current Status (MVP Complete)
+Backend
+
+You already have a Notes CRUD API.
+
+API Contracts:
+
+```
+GET /api/v1/notes
+GET /api/v1/notes/:id
+POST /api/v1/notes
+PATCH /api/v1/notes/:id
+ DELETE /api/v1/notes/:id
+```
+
+Payload example:
+
+```
+POST /api/v1/notes
+{
+  title,
+  content
+}
+```
+
+### Frontend (React)
+
+Routing structure:
+
+```
+/
+|-- HomePage        -> list of notes
+|-- /note/:id       -> note detail
+|-- /create         -> create note
+```
+
+So far:
+
+- React Router implemented
+
+- CRUD working
+
+- Global notes (no users)
+
+- Hosted on Render
+
+This is my perfect MVP.
