@@ -41,6 +41,29 @@ export const registerUser = async (req, res) => {
         message: 'Email already registered'
       })
     }
+
+    // 4️⃣ Hash Password
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    // 5️⃣ Create User
+    const user = await User.create({
+      username,
+      email,
+      password: hashedPassword
+    })
+
+    // 6️⃣ Create Session
+    req.session.userId = user._id
+
+    // 7️⃣ Send Response
+    res.status(201).json({
+      message: 'User registered successfully',
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email
+      }
+    })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Server error' })
