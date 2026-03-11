@@ -14,7 +14,7 @@ import MongoStore from 'connect-mongo'
 dotenv.config()
 
 const __dirname = path.resolve()
-console.log(__dirname)
+
 const app = express()
 
 if (process.env.NODE_ENV !== 'production') {
