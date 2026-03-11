@@ -12,6 +12,7 @@ REGISTER FLOW
 
 import bcrypt from 'bcrypt'
 import User from '../models/User.js'
+
 export const registerUser = async (req, res) => {
   try {
     let { username, email, password } = req.body
@@ -72,5 +73,63 @@ export const registerUser = async (req, res) => {
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Server error' })
+  }
+}
+
+/**
+ LOGIN FLOW
+ =========
+ 
+ */
+
+export const loginUser = async (req, res) => {
+  try {
+    let { email, password } = req.body
+
+    email = email.trim().toLowerCase()
+
+    if (!email || !password) {
+      return res.status(400).json({
+        message: 'Email and password are required'
+      })
+    }
+
+    // Find user
+    const user = await User.findOne({ email })
+
+    if (!user) {
+      return res.status(401).json({
+        message: 'Invalid credentials'
+      })
+    }
+
+    // Compare password
+    const isMatch = await bcrypt.compare(password, user.password)
+
+    if (!isMatch) {
+      return res.status(401).json({
+        message: 'Invalid credentials'
+      })
+    }
+
+    // Create session
+    req.session.user = {
+      id: user._id
+    }
+
+    res.json({
+      message: 'Login successful',
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email
+      }
+    })
+  } catch (error) {
+    console.error(error)
+
+    res.status(500).json({
+      message: 'Server error'
+    })
   }
 }
