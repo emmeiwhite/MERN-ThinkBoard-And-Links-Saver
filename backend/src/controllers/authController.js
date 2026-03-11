@@ -53,7 +53,12 @@ export const registerUser = async (req, res) => {
     })
 
     // 6️⃣ Create Session
-    req.session.userId = user._id
+    //   req.session.userId = user._id
+
+    // Improvement : Later we can add roles and permissions without changing structure
+    req.session.user = {
+      id: user._id
+    }
 
     // 7️⃣ Send Response
     res.status(201).json({
