@@ -556,3 +556,11 @@ In **session authentication**, after login the server sends a cookie like:
 ```
 connect.sid = xyz123
 ```
+
+### Now, we have
+
+```
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+POST /api/v1/auth/logout
+```
