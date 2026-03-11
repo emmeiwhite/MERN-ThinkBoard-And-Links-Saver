@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import Note from '../models/Note.js'
 
 export const getAllNotes = async (req, res) => {
