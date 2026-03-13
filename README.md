@@ -599,3 +599,28 @@ If it exists → allow.
 
 If not → block.
 ```
+
+## 4️⃣ What Happens Now (Request Lifecycle)
+
+Example:
+`GET /api/v1/notes/123`
+
+Flow:
+
+```
+Request arrives
+      │
+      ▼
+protectRoute
+      │
+      │ checks req.session.user
+      ▼
+validateObjectId
+      │
+      │ checks Mongo ObjectId format
+      ▼
+getNoteById Controller
+      │
+      ▼
+Database Query
+```

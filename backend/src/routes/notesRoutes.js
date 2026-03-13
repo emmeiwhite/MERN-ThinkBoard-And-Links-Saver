@@ -9,17 +9,25 @@ import {
   getNoteById
 } from '../controllers/notesController.js'
 import { validateObjectId } from '../middleware/validateObjectId.js'
+import { protectRoute } from '../middleware/authMiddleware.js'
+
+// For routes with an ID, we want this order: protectRoute → validateObjectId → controller
 
 const notesRouter = express.Router()
 
-notesRouter.get('/', getAllNotes)
+// Get all notes of logged-in user
+notesRouter.get('/', protectRoute, getAllNotes)
 
-notesRouter.get('/:id', validateObjectId, getNoteById)
+// Get single note
+notesRouter.get('/:id', protectRoute, validateObjectId, getNoteById)
 
-notesRouter.post('/', createNote)
+// Create note
+notesRouter.post('/', protectRoute, createNote)
 
-notesRouter.patch('/:id', validateObjectId, editNote)
+// Edit note
+notesRouter.patch('/:id', protectRoute, validateObjectId, editNote)
 
-notesRouter.delete('/:id', validateObjectId, deleteNote)
+// delete note
+notesRouter.delete('/:id', protectRoute, validateObjectId, deleteNote)
 
 export default notesRouter
