@@ -1,5 +1,6 @@
 import express from 'express'
 import { registerUser, loginUser, logoutUser } from '../controllers/authController.js'
+import { protectRoute } from '../middleware/authMiddleware.js'
 
 const authRouter = express.Router()
 
@@ -9,5 +10,12 @@ const authRouter = express.Router()
 authRouter.post('/register', registerUser)
 authRouter.post('/login', loginUser)
 authRouter.delete('/logout', logoutUser)
+
+// Protected Routes
+router.get('/', protectRoute, (req, res) => {
+  res.json({
+    message: 'You are authenticated'
+  })
+})
 
 export default authRouter

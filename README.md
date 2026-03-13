@@ -564,3 +564,38 @@ POST /api/v1/auth/register
 POST /api/v1/auth/login
 POST /api/v1/auth/logout
 ```
+
+## 4️⃣ Auth Middleware (Protected Routes)
+
+`middleware/authMiddleware.js`
+
+```
+export const protectRoute = (req, res, next) => {
+
+if (!req.session.user) {
+return res.status(401).json({
+message: "Unauthorized"
+})
+}
+
+next()
+}
+```
+
+This is the gatekeeper.
+
+### How It Works
+
+Example request:
+
+`GET /api/v1/notes`
+
+Middleware checks:
+
+`req.session.user`
+
+```
+If it exists → allow.
+
+If not → block.
+```
