@@ -36,7 +36,8 @@ export const editNote = async (req, res) => {
     if (title !== undefined) updateFields.title = title
     if (content !== undefined) updateFields.content = content
 
-    const updatedNote = await Note.findByIdAndUpdate(id, updateFields, {
+    //  (Ownership Protection)
+    const updatedNote = await Note.findByIdAndUpdate({ _id: id, user: req.userId }, updateFields, {
       new: true,
       runValidators: true
     })
