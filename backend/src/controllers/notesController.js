@@ -16,7 +16,7 @@ export const createNote = async (req, res) => {
   try {
     const { title, content } = req.body
 
-    const note = new Note({ title, content })
+    const note = new Note({ title, content, user: req.userId })
 
     const newNote = await note.save()
 
