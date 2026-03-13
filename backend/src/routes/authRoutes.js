@@ -1,6 +1,7 @@
 import express from 'express'
 import { registerUser, loginUser, logoutUser } from '../controllers/authController.js'
 import { protectRoute } from '../middleware/authMiddleware.js'
+import { getAllNotes } from '../controllers/notesController.js'
 
 const authRouter = express.Router()
 
@@ -17,5 +18,7 @@ router.get('/', protectRoute, (req, res) => {
     message: 'You are authenticated'
   })
 })
+
+router.get('/', protectRoute, getAllNotes)
 
 export default authRouter
