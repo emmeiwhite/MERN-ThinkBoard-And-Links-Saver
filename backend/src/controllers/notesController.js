@@ -1,82 +1,56 @@
 import Note from '../models/Note.js'
+import { asyncHandler } from '../middleware/asyncHandler.js'
 
-export const getAllNotes = async (req, res) => {
-  console.log('Controller Invoked')
-  try {
-    const notes = await Note.find({ user: req.userId }).sort({ createdAt: -1 }) // newest first
-    console.log('Notes send back')
-    res.status(200).send(notes)
-  } catch (error) {
-    console.log(`Error getting all notes`, error)
-    res.status(500).send({ message: 'Internal Server Error!' })
+export const getAllNotes = asyncHandler(async (req, res) => {
+  const notes = await Note.find({ user: req.userId }).sort({ createdAt: -1 }) // newest first
+  res.status(200).send(notes)
+})
+
+export const createNote = asyncHandler(async (req, res) => {
+  const { title, content } = req.body
+
+  const note = new Note({ title, content, user: req.userId })
+
+  const newNote = await note.save()
+
+  res.status(201).send(newNote)
+})
+
+export const editNote = asyncHandler(async (req, res) => {
+  const { id } = req.params
+  const { content, title } = req.body
+  const updateFields = {}
+
+  if (title !== undefined) updateFields.title = title
+  if (content !== undefined) updateFields.content = content
+
+  //  (Ownership Protection)
+  const updatedNote = await Note.findByIdAndUpdate({ _id: id, user: req.userId }, updateFields, {
+    new: true,
+    runValidators: true
+  })
+  // If id doesn't match
+  if (!updatedNote) return res.status(404).json({ message: 'Note not found' })
+
+  res.status(200).send(updatedNote)
+})
+
+export const deleteNote = asyncHandler(async (req, res) => {
+  const { id } = req.params
+
+  const deletedNote = await Note.findByIdAndDelete({ _id: id, user: req.userId })
+
+  if (!deletedNote) {
+    return res.status(404).json({ message: 'Note not found' })
   }
-}
 
-export const createNote = async (req, res) => {
-  try {
-    const { title, content } = req.body
+  res.status(200).json({ message: 'Note deleted successfully' })
+})
 
-    const note = new Note({ title, content, user: req.userId })
+export const getNoteById = asyncHandler(async (req, res) => {
+  const { id } = req.params
 
-    const newNote = await note.save()
-
-    res.status(201).send(newNote)
-  } catch (error) {
-    console.log(`Error creating Note`, error)
-    res.status(500).send({ message: 'Internal Server Error!' })
-  }
-}
-
-export const editNote = async (req, res) => {
-  try {
-    const { id } = req.params
-    const { content, title } = req.body
-    const updateFields = {}
-
-    if (title !== undefined) updateFields.title = title
-    if (content !== undefined) updateFields.content = content
-
-    //  (Ownership Protection)
-    const updatedNote = await Note.findByIdAndUpdate({ _id: id, user: req.userId }, updateFields, {
-      new: true,
-      runValidators: true
-    })
-    // If id doesn't match
-    if (!updatedNote) return res.status(404).json({ message: 'Note not found' })
-
-    res.status(200).send(updatedNote)
-  } catch (error) {
-    console.log(`Error editing Note`, error)
-    res.status(500).send({ message: 'Internal Server Error!' })
-  }
-}
-
-export const deleteNote = async (req, res) => {
-  try {
-    const { id } = req.params
-
-    const deletedNote = await Note.findByIdAndDelete({ _id: id, user: req.userId })
-
-    if (!deletedNote) {
-      return res.status(404).json({ message: 'Note not found' })
-    }
-
-    res.status(200).json({ message: 'Note deleted successfully' })
-  } catch (error) {
-    console.log('Error deleting note', error)
-    res.status(500).json({ message: 'Internal Server Error!' })
-  }
-}
-
-export const getNoteById = async (req, res) => {
-  try {
-    const { id } = req.params
-
-    const note = await Note.findOne({ _id: id, user: req.userId })
-    if (!note) return res.status(404).json({ message: 'Note not found!' })
-    res.status(200).json(note)
-  } catch (error) {
-    console.log('Error getting single note with this ID', error)
-    res.status(500).json({ message: 'Internal Server Error!' })
-  }
-}
+  const note = await Note.findOne({ _id: id, user: req.userId })
+  if (!note) return res.status(404).json({ message: 'Note not found!' })
+  res.status(200).json(note)
+})
