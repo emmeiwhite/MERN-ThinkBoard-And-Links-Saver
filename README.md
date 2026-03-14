@@ -624,3 +624,22 @@ getNoteById Controller
       ▼
 Database Query
 ```
+
+### Route
+
+Clean Implementation of /auth/me
+
+```
+export const getCurrentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select('-password')
+
+    res.json({ user })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Server error'
+    })
+  }
+}
+```

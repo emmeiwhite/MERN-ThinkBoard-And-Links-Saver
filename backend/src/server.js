@@ -29,6 +29,7 @@ app.use(express.json()) // middleware to parse json data
 
 const PORT = process.env.PORT || 3000
 
+// express-session
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
