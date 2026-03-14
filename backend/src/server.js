@@ -6,6 +6,7 @@ import connectDB from './config/db.js'
 import dotenv from 'dotenv'
 import rateLimiter from './middleware/rateLimiter.js'
 import path from 'path'
+import { errorHandler } from './middleware/errorHandler.js'
 
 // User - Auth
 import session from 'express-session'
@@ -54,6 +55,9 @@ app.use(rateLimiter)
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/notes', notesRouter)
+
+// Global Error Handler
+app.use(errorHandler)
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/dist')))
