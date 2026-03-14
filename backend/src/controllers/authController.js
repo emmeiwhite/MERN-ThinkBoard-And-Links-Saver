@@ -153,3 +153,21 @@ export const logoutUser = (req, res) => {
     })
   })
 }
+
+/**
+ * Get Current User
+ */
+
+export const getCurrentUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.userId).select('-password')
+
+    // Sending back user for the particular cookie (connect.sid) being sent from the Browser after successful register or login
+    res.json({ user })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({
+      message: 'Server error'
+    })
+  }
+}

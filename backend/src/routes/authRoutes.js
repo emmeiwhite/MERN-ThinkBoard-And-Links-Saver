@@ -9,4 +9,8 @@ authRouter.post('/register', registerUser)
 authRouter.post('/login', loginUser)
 authRouter.delete('/logout', logoutUser)
 
+// 4. Get Current User
+
+authRouter.get('/me')
+
 export default authRouter
