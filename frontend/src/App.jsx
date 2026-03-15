@@ -2,23 +2,36 @@ import { Route, Routes } from 'react-router'
 import HomePage from './pages/HomePage'
 import NoteDetailPage from './pages/NoteDetailPage'
 import CreateNote from './pages/CreatePage'
+import ProtectedRoute from './routes/ProtectedRoute'
 
 export default function App() {
   return (
     <div data-theme="forest">
       <Routes>
         <Route
-          path="/"
-          element={<HomePage />}
+          path="/login"
+          element={<LoginPage />}
         />
         <Route
-          path="/note/:id"
-          element={<NoteDetailPage />}
+          path="/register"
+          element={<RegisterPage />}
         />
-        <Route
-          path="/create"
-          element={<CreateNote />}
-        />
+
+        {/* Notes are protected and we need protected routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route
+            path="/"
+            element={<HomePage />}
+          />
+          <Route
+            path="/note/:id"
+            element={<NoteDetailPage />}
+          />
+          <Route
+            path="/create"
+            element={<CreateNote />}
+          />
+        </Route>
       </Routes>
     </div>
   )
