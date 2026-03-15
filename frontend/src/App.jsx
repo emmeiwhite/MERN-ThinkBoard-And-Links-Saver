@@ -3,6 +3,8 @@ import HomePage from './pages/HomePage'
 import NoteDetailPage from './pages/NoteDetailPage'
 import CreateNote from './pages/CreatePage'
 import ProtectedRoute from './routes/ProtectedRoute'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 
 export default function App() {
   return (
