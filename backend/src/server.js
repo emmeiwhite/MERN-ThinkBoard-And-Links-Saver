@@ -21,7 +21,8 @@ const app = express()
 if (process.env.NODE_ENV !== 'production') {
   app.use(
     cors({
-      origin: ['http://localhost:5173', 'https://yourapp.com']
+      origin: ['http://localhost:5173'],
+      credentials: true
     })
   )
 }
@@ -45,7 +46,7 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: 1000 * 60 * 60 * 24
     }
   })

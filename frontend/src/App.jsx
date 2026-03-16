@@ -1,10 +1,10 @@
 import { Route, Routes } from 'react-router'
-import HomePage from './pages/HomePage'
+import HomePage from './pages/app/HomePage'
 import NoteDetailPage from './pages/NoteDetailPage'
 import CreateNote from './pages/CreatePage'
 import ProtectedRoute from './routes/ProtectedRoute'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
+import LoginPage from './pages/public/LoginPage'
+import RegisterPage from './pages/public/RegisterPage'
 
 export default function App() {
   return (
