@@ -9,6 +9,32 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
 
+  // register
+  const register = async userData => {
+    const res = await api.post('/auth/register', userData)
+    setUser(res.data.user)
+    return res.data.user
+  }
+
+  // From login request API, To be used in LoginPage
+  const login = async credentials => {
+    const res = await api.post('/auth/login', credentials)
+    setUser(res.data.user)
+
+    return res.data.user
+  }
+
+  // logout logic: To be used in the LogoutPage
+  const logout = async () => {
+    try {
+      await api.delete('/auth/logout')
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setUser(null)
+    }
+  }
+
   const checkAuth = async () => {
     try {
       const res = await api.get('/auth/me')
@@ -19,23 +45,6 @@ export const AuthProvider = ({ children }) => {
       setUser(null)
     } finally {
       setLoading(false)
-    }
-  }
-
-  const login = async credentials => {
-    const res = await api.post('/auth/login', credentials)
-    setUser(res.data.user)
-
-    return res.data.user
-  }
-
-  const logout = async () => {
-    try {
-      await api.delete('/auth/logout')
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setUser(null)
     }
   }
 
@@ -50,7 +59,8 @@ export const AuthProvider = ({ children }) => {
     user,
     login,
     logout,
-    loading
+    loading,
+    register
   }
 
   return <AuthContext.Provider value={contextValues}>{children}</AuthContext.Provider>
