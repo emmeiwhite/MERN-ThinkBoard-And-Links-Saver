@@ -38,3 +38,14 @@ export default function App() {
     </div>
   )
 }
+
+/*
+/login
+/register
+   ↓
+ProtectedRoute
+   ↓
+/ (notes)
+/note/:id
+/create
+*/
