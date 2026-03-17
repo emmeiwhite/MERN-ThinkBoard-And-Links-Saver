@@ -3,7 +3,7 @@ import Navbar from '../../components/layout/Navbar'
 import RateLimitedUI from '../../components/feedback/RateLimitedUI'
 import toast from 'react-hot-toast'
 
-import NoteCard from '../components/NoteCard'
+import NoteCard from '../../components/notes/NoteCard'
 import api from '../../lib/axios'
 import NoteNotFound from '../../components/feedback/NotesNotFound'
 
